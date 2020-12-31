@@ -3,6 +3,12 @@ import schedule
 from superLotto import superLottoRun
 import logging
 
+# 每周1、3、6执行Dtl
+schedule.every().monday.at('21:00').do(superLottoRun)
+schedule.every().wednesday.at('22:03').do(superLottoRun)
+schedule.every().saturday.at('21:00').do(superLottoRun)
+schedule.every().thursday.at('17:27').do(superLottoRun)
+
 
 class LoggerFactory:
     def __init__(self, name=__name__):
@@ -37,14 +43,8 @@ class LoggerFactory:
 
 if __name__ == '__main__':
     factory = LoggerFactory('Test_Main')
-    factory.create_logger()
     factory.logger.info("项目启动")
-
-# 每周1、3、6执行Dtl
-schedule.every().monday.at('21:00').do(superLottoRun)
-schedule.every().wednesday.at("21:00").do(superLottoRun)
-schedule.every().saturday.at('21:00').do(superLottoRun)
 
 while True:
     schedule.run_pending()
-    time.sleep(60 * 60 * 24)  # 间隔一天
+    time.sleep(1)

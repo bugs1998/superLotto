@@ -6,10 +6,12 @@ import requests
 from bs4 import BeautifulSoup
 
 logFile = open("run.log", encoding="utf-8", mode="a")
-logging.basicConfig(stream=logFile, format="%(asctime)s %(name)s:%(levelname)s:%(message)s", datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
+logging.basicConfig(stream=logFile, format="%(asctime)s %(name)s:%(levelname)s:%(message)s",
+                    datefmt="%Y-%m-%d %H:%M:%S", level=logging.INFO)
 
 
 def superLottoRun():
+    logging.info('进入方法')
     target = 'https://kaijiang.500.com/dlt.shtml'
     text = requests.get(url=target)
     html = BeautifulSoup(text.text, features='lxml')
@@ -39,14 +41,7 @@ def superLottoRun():
     week = '大乐透第' + week + '期'
 
     # 推送微信
-    des = ServerChan.ServerChanDlt(texts, week)
-    if des['errno'] == 0:
-        logging.info('微信推送成功')
-    elif des['errno'] == 1024:
-        logging.info('微信推送内容重复')
-    else:
-        logging.info('推送：未知错误')
-
+    ServerChan.ServerChanDlt(texts, week)
 
 # if __name__ == '__main__':
 #     superLottoRun()
